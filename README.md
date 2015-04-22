@@ -4,7 +4,7 @@ This Windows Live Writer plugin allows to integrate code block to your blog post
 
 # How to install?
 
-1. Download the DLL
+1. [Download the DLL](https://github.com/meziantou/Meziantou.WLW.CodeEditor/releases/)
 2. Copy it to "C:\Program Files (x86)\Windows Live\Writer\Plugins"
 
 # How to use?
