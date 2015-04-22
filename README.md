@@ -12,3 +12,5 @@ This Windows Live Writer plugin allows to integrate code block to your blog post
 1. Go to the Insert tab of the ribbon and click the `code (smart)` button
 2. Select the language and write your code
 3. Click OK
+
+![screenshot](https://raw.githubusercontent.com/meziantou/Meziantou.WLW.CodeEditor/master/CodeEditor.png)
