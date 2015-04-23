@@ -101,25 +101,19 @@ namespace Meziantou.WLW.CodeEditor
 
             return str;
         }
-
-        public Language(string displayName, string value) : this(displayName, value, true)
-        {
-        }
-
-        public Language(string displayName, string value, bool htmlEncode)
+        
+        public Language(string displayName, string value)
         {
             DisplayName = displayName;
             Value = value;
-            HtmlEncode = htmlEncode;
         }
 
         public string DisplayName { get; }
         public string Value { get; }
-        public bool HtmlEncode { get; }
 
         public override string ToString()
         {
-            return $"{DisplayName}";
+            return DisplayName;
         }
     }
 }

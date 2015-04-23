@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web;
 using System.Windows.Forms;
 using WindowsLive.Writer.Api;
 using WindowsLive.Writer.HtmlParser.Parser;
@@ -14,14 +15,13 @@ namespace Meziantou.WLW.CodeEditor
         {
             string text = content.GetCode();
             string languageName = content.GetLanguage();
-            Language language = Language.FromString(languageName);
             string languageValue = Language.GetValueFromString(languageName);
             if (string.IsNullOrEmpty(languageValue))
             {
                 languageValue = "none";
             }
-
-            return $"<pre><code class='language-{languageValue}' data-html-encode='{language?.HtmlEncode}'>{text}</code></pre>";
+            
+            return $"<pre><code class='language-{languageValue}'>{HttpUtility.HtmlEncode(text)}</code></pre>";
         }
 
         public override SmartContentEditor CreateEditor(ISmartContentEditorSite editorSite)
@@ -60,13 +60,12 @@ namespace Meziantou.WLW.CodeEditor
             if (result == DialogResult.OK || result == DialogResult.Yes)
             {
                 string languageValue = Language.GetValueFromString(form.Language);
-                Language language = Language.FromString(form.Language);
                 if (string.IsNullOrEmpty(languageValue))
                 {
                     languageValue = "none";
                 }
 
-                content = $"{begin}<pre><code class='language-{languageValue}' data-html-encode='{language?.HtmlEncode}'>{form.Code}</code></pre>{end}";
+                content = $"{begin}<pre><code class='language-{languageValue}'>{HttpUtility.HtmlEncode(form.Code)}</code></pre>{end}";
                 return DialogResult.OK;
             }
 
@@ -137,7 +136,7 @@ namespace Meziantou.WLW.CodeEditor
                         }
 
                         string html = content.Substring(codeContentTag.Offset + codeContentTag.Length, length);
-                        code = html;
+                        code = HttpUtility.HtmlDecode(html);
                     }
                 }
             }
