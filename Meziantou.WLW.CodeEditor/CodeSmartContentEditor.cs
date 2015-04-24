@@ -15,7 +15,7 @@ namespace Meziantou.WLW.CodeEditor
             _editorSite = editorSite;
             InitializeComponent();
             comboBoxLanguage.DataSource = Language.DefaultLanguages;
-            
+
             SelectedContentChanged += CodeSmartContentEditor_SelectedContentChanged;
         }
 
@@ -33,13 +33,11 @@ namespace Meziantou.WLW.CodeEditor
                 return;
 
             CodeEditorForm form = new CodeEditorForm();
-            form.Language = SelectedContent.GetLanguage();
-            form.Code = SelectedContent.GetCode();
+            form.InitFromSmartContent(SelectedContent);
             var result = form.ShowDialog(ParentForm);
             if (result == DialogResult.OK || result == DialogResult.Yes)
             {
-                SelectedContent.SetCode(form.Code);
-                SelectedContent.SetLanguage(form.Language);
+                form.UpdateSmartContent(SelectedContent);
                 OnContentEdited();
             }
         }

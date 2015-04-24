@@ -25,5 +25,14 @@ namespace Meziantou.WLW.CodeEditor
         {
             smartContent.Properties["language"] = value;
         }
+        public static string GetLineHighlight(this ISmartContent smartContent)
+        {
+            return smartContent.Properties["lineHighlight"];
+        }
+
+        public static void SetLineHighlight(this ISmartContent smartContent, string value)
+        {
+            smartContent.Properties["lineHighlight"] = value;
+        }
     }
 }

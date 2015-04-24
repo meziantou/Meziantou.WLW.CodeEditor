@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Web;
 using System.Windows.Forms;
 using WindowsLive.Writer.Api;
@@ -14,14 +15,29 @@ namespace Meziantou.WLW.CodeEditor
         public override string GeneratePublishHtml(ISmartContent content, IPublishingContext publishingContext)
         {
             string text = content.GetCode();
+            string lineHightlight = content.GetLineHighlight();
             string languageName = content.GetLanguage();
             string languageValue = Language.GetValueFromString(languageName);
             if (string.IsNullOrEmpty(languageValue))
             {
                 languageValue = "none";
             }
-            
-            return $"<pre><code class='language-{languageValue}'>{HttpUtility.HtmlEncode(text)}</code></pre>";
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append("<pre");
+            if (!string.IsNullOrEmpty(lineHightlight))
+            {
+                sb.Append(" data-line='");
+                sb.Append(lineHightlight);
+                sb.Append("'");
+            }
+            sb.Append("><code class='language-");
+            sb.Append(languageValue);
+            sb.Append("'>");
+            sb.Append(HttpUtility.HtmlEncode(text));
+            sb.Append("</code></pre>");
+
+            return sb.ToString();
         }
 
         public override SmartContentEditor CreateEditor(ISmartContentEditorSite editorSite)
@@ -35,8 +51,7 @@ namespace Meziantou.WLW.CodeEditor
             DialogResult result = form.ShowDialog(dialogOwner);
             if (result == DialogResult.OK || result == DialogResult.Yes)
             {
-                newContent.SetCode(form.Code);
-                newContent.SetLanguage(form.Language);
+                form.UpdateSmartContent(newContent);
             }
             return result;
         }
